@@ -15,7 +15,6 @@ type Config struct {
 	Branch        string
 	Order         string
 	FailOnMissing bool
-	Debug         bool
 }
 
 func NewRootCmd() *cobra.Command {
@@ -37,7 +36,6 @@ commit hashes, then outputs the commit hashes sorted by their order in the speci
 	cmd.Flags().StringVarP(&config.Branch, "branch", "b", "main", "Git branch to use for ordering")
 	cmd.Flags().StringVarP(&config.Order, "order", "o", "desc", "Sort order: 'asc' or 'desc'")
 	cmd.Flags().BoolVarP(&config.FailOnMissing, "fail-on-missing", "f", false, "Fail if commits are not found in branch")
-	cmd.Flags().BoolVarP(&config.Debug, "debug", "d", false, "Show debug output for troubleshooting")
 
 	return cmd
 }
@@ -71,7 +69,6 @@ func Run(config *Config) error {
 	sortedHashes, err := Sort(config.RepoPath, config.Branch, expandedHashes, SortOptions{
 		Order:         config.Order,
 		FailOnMissing: config.FailOnMissing,
-		Debug:         config.Debug,
 	})
 	if err != nil {
 		return fmt.Errorf("error sorting commits: %v", err)
