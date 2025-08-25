@@ -1,0 +1,36 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    
+    - name: Build
+      run: go build -v -o gil ./src
+    
+    - name: Test
+      run: go test -v ./src
+    
+    - name: Integration Tests
+      run: ./integration-tests/run-tests.sh
+    
+    - name: Upload binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: gil-binary
+        path: gil
