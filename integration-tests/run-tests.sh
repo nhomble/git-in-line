@@ -12,8 +12,10 @@ run_test() {
     local name="$1"
     local expected_file="$2"
     shift 2
-    
-    if diff -q <("$BINARY" "$REPO" "$@") "$expected_file" >/dev/null; then
+    tmp_output=$(mktemp)
+    "$BINARY" "$REPO" "$@" > "$tmp_output"
+
+    if diff -q "$tmp_output" "$expected_file" >/dev/null; then
         echo "✓ $name"
     else
         echo "✗ $name"
