@@ -22,7 +22,7 @@ run_test() {
         echo "Expected:"
         cat "$expected_file"
         echo "Got:"
-        "$BINARY" "$REPO" "$@"
+        cat "$tmp_output"
         exit 1
     fi
 }
