@@ -13,7 +13,6 @@ run_test() {
     local expected_file="$2"
     shift 2
     tmp_output=$(mktemp)
-    "$BINARY" "$REPO" "$@"
     "$BINARY" "$REPO" "$@" > "$tmp_output"
 
     if diff -q "$tmp_output" "$expected_file" >/dev/null; then
