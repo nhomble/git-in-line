@@ -5,6 +5,7 @@ cd "$(dirname "$0")"
 BINARY="../gil"
 REPO="alphonse-bark"
 
+rm -f "$BINARY"
 [ -f "$BINARY" ] || (cd .. && go build -o gil ./src)
 
 run_test() {
